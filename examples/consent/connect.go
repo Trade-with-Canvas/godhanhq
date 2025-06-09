@@ -9,7 +9,7 @@ package main
 
 import (
 	"fmt"
-	dhanhq "github.com/Trade-with-Canvas/godhanhq"
+	dhanhq "github.com/tradewithcanvas/godhanhq"
 )
 
 const (
