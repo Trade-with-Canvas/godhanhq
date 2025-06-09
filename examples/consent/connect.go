@@ -22,7 +22,10 @@ const (
 func main() {
 
 	// Create a new DhanHQ client with the partner ID
-	dhanClient := dhanhq.New(partnerId, true)
+	dhanClient := dhanhq.New(true)
+
+	// Set the partner secret
+	dhanClient.SetPartnerId(partnerId)
 
 	// Generate Consent
 	consentResponse, err := dhanClient.GenerateConsent(partnerSecret)

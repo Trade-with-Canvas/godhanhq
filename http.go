@@ -9,12 +9,6 @@ import (
 	"net/url"
 )
 
-// errorEnvelope is a type which Dhan uses for sending error messages
-type errorEnvelope struct {
-	Data   interface{} `json:"data"`
-	Status string      `json:"status"`
-}
-
 // HTTPResponse represents the response from an HTTP request
 type HTTPResponse struct {
 	Body     []byte
@@ -143,6 +137,18 @@ func (c *httpClient) DoRaw(method, rURL string, reqBody []byte, headers http.Hea
 	if c.debug {
 		log.Println("Response Status:", httpResponse.Status)
 		log.Println("Response Body:", string(data))
+	}
+	// Check if the response status code indicates an error
+	if httpResponse.StatusCode < 200 || httpResponse.StatusCode >= 300 {
+		log.Println("Error Response Status:", httpResponse.Status)
+		var errResp ErrorResponse
+		if err := json.Unmarshal(data, &errResp); err != nil {
+			return resp, err
+		}
+		if c.debug {
+			log.Println("Error Response:", errResp)
+		}
+		return resp, err
 	}
 	return resp, nil
 }

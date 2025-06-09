@@ -28,6 +28,29 @@ type Client struct {
 	httpClient HTTPClient
 }
 
+// Some useful constants for DhanHQ API
+const (
+	TransactionTypeBuy  = "BUY"
+	TransactionTypeSell = "SELL"
+
+	PositionTypeLong   = "LONG"
+	PositionTypeShort  = "SHORT"
+	PositionTypeClosed = "CLOSED"
+
+	ExchangeSegmentEquityNSE = "NSE_EQ"
+	ExchangeSegmentEquityBSE = "BSE_EQ"
+	ExchangeSegmentFNONSE    = "NSE_FNO"
+	ExchangeSegmentFNOBSE    = "BSE_FNO"
+	ExchangeSegmentMCXCOMM   = "MCX_COMM"
+
+	ProductTypeIntraday = "INTRADAY"
+	ProductTypeCNC      = "CNC"
+	ProductTypeMargin   = "MARGIN"
+	ProductTypeMTF      = "MTF"
+	ProductTypeCO       = "CO"
+	ProductTypeBO       = "BO"
+)
+
 // API endpoints for DhanHQ
 const (
 	// Partner endpoints for auth
@@ -68,18 +91,17 @@ const (
 	URIProfile = "/profile"
 )
 
-type ErrorMessage struct {
+type ErrorResponse struct {
 	ErrorType    string `json:"errorType"`
 	ErrorCode    string `json:"errorCode"`
 	ErrorMessage string `json:"errorMessage"`
 }
 
 // New creates a new DhanHQ API client with the provided parameters.
-func New(partnerId string, debug bool) *Client {
+func New(debug bool) *Client {
 	client := &Client{
-		baseURI:   baseURI,
-		authURI:   authURI,
-		partnerId: partnerId,
+		baseURI: baseURI,
+		authURI: authURI,
 	}
 	// Initialize the HTTP client
 	client.httpClient = NewHTTPClient(
@@ -89,6 +111,8 @@ func New(partnerId string, debug bool) *Client {
 
 	return client
 }
+
+// Getters for Client fields
 
 func (c *Client) GetBaseURI() string {
 	return c.baseURI
