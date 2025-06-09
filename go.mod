@@ -1,3 +1,3 @@
-module github.com/Trade-with-Canvas/godhanhq
+module github.com/trade-with-canvas/godhanhq
 
 go 1.24.3

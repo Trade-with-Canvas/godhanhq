@@ -61,6 +61,17 @@ type Holdings struct {
 	Holdings []Holding `json:"holdings"`
 }
 
+type FundLimit struct {
+	DhanClientId        string  `json:"dhanClientId"`
+	AvailabelBalance    float64 `json:"availabelBalance"` // typo in api response as seen at https://api.dhan.co/v2/#/operations/fundlimit
+	SodLimit            float64 `json:"sodLimit"`
+	CollateralAmount    float64 `json:"collateralAmount"`
+	ReceivableAmount    float64 `json:"receivableAmount"`
+	UtilizedAmount      float64 `json:"utilizedAmount"`
+	BlockedPayoutAmount float64 `json:"blockedPayoutAmount"`
+	WithdrawableBalance float64 `json:"withdrawableBalance"`
+}
+
 // GetPositions retrieves the positions for a given client
 func (c *Client) GetPositions() (Positions, error) {
 	headers := http.Header{
@@ -118,17 +129,6 @@ func (c *Client) GetHoldings() (Holdings, error) {
 		Holdings: holdingsSlice,
 	}
 	return holdings, nil
-}
-
-type FundLimit struct {
-	DhanClientId        string  `json:"dhanClientId"`
-	AvailabelBalance    float64 `json:"availabelBalance"` // typo in api response as seen at https://api.dhan.co/v2/#/operations/fundlimit
-	SodLimit            float64 `json:"sodLimit"`
-	CollateralAmount    float64 `json:"collateralAmount"`
-	ReceivableAmount    float64 `json:"receivableAmount"`
-	UtilizedAmount      float64 `json:"utilizedAmount"`
-	BlockedPayoutAmount float64 `json:"blockedPayoutAmount"`
-	WithdrawableBalance float64 `json:"withdrawableBalance"`
 }
 
 func (c *Client) GetFundLimit() (FundLimit, error) {
