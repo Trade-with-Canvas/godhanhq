@@ -57,8 +57,8 @@ You can check the [examples](https://github.com/tradewithcanvas/godhanhq/tree/ma
 
 #### Some examples:
 
-[Consent Login](https://github.com/tradewithcanvas/godhanhq/tree/main/examples)
+[Consent Login](https://github.com/tradewithcanvas/godhanhq/tree/main/examples/consent)
 
-[Margins](https://github.com/tradewithcanvas/godhanhq/tree/main/examples)
+[Margins](https://github.com/tradewithcanvas/godhanhq/tree/main/examples/margins)
 
-[Portfolio](https://github.com/tradewithcanvas/godhanhq/tree/main/examples)
+[Portfolio](https://github.com/tradewithcanvas/godhanhq/tree/main/examples/portfolio)
