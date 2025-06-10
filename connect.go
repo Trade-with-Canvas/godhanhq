@@ -11,7 +11,7 @@ import (
 // Information about the library and some useful constants
 const (
 	name    string = "dhanhq"
-	version string = "0.1.0"
+	version string = "0.1.1"
 	baseURI string = "https://api.dhan.co/v2"
 	authURI string = "https://auth.dhan.co"
 )

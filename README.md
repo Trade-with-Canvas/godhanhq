@@ -1,5 +1,6 @@
 # DhanHQ Go SDK
-
+[![Go Reference](https://pkg.go.dev/badge/github.com/tradewithcanvas/godhanhq.svg)](https://pkg.go.dev/github.com/tradewithcanvas/godhanhq)
+[![Go Report Card](https://goreportcard.com/badge/github.com/tradewithcanvas/godhanhq)](https://goreportcard.com/report/github.com/tradewithcanvas/godhanhq)
 ### Overview
 
 `godhanhq` is a Go SDK for interacting with the DhanHQ API. It provides a simple and efficient way to access various endpoints of the DhanHQ platform in a simple and easy manner.
