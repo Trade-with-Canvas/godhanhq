@@ -72,6 +72,17 @@ type FundLimit struct {
 	WithdrawableBalance float64 `json:"withdrawableBalance"`
 }
 
+type ConvertPositionRequest struct {
+	DhanClientId    string `json:"dhanClientId"`
+	FromProductType string `json:"fromProductType"`
+	ExchangeSegment string `json:"exchangeSegment"`
+	PositionType    string `json:"positionType"`
+	SecurityId      string `json:"securityId"`
+	TradingSymbol   string `json:"tradingSymbol"`
+	ConvertQty      int32  `json:"convertQty"`
+	ToProductType   string `json:"toProductType"`
+}
+
 // GetPositions retrieves the positions for a given client
 func (c *Client) GetPositions() (Positions, error) {
 	headers := http.Header{
@@ -146,4 +157,29 @@ func (c *Client) GetFundLimit() (FundLimit, error) {
 	}
 
 	return fundLimit, nil
+}
+
+func (c *Client) ConvertPosition(req ConvertPositionRequest) error {
+	headers := http.Header{
+		"access-token": {c.accessToken},
+	}
+
+	body, err := json.Marshal(req)
+	if err != nil {
+		return fmt.Errorf("failed to marshal request: %w", err)
+	}
+
+	resp, err := c.httpClient.DoJSON(http.MethodPost, c.baseURI+URIPositionConvert, nil, body, headers, nil)
+
+	if err != nil {
+		return fmt.Errorf("failed to convert position: %w", err)
+	}
+
+	var errorResp ErrorResponse
+	if err = json.Unmarshal(resp.Body, &errorResp); err == nil && errorResp.ErrorMessage != "" {
+		return fmt.Errorf("API error: %s (Code: %s, Type: %s)",
+			errorResp.ErrorMessage, errorResp.ErrorCode, errorResp.ErrorType)
+	}
+
+	return nil
 }

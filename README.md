@@ -31,7 +31,9 @@ const (
 
 
 func main() {
+	
 	dhanClient := dhanhq.New(true) // true enables debug logging
+	
 	// Set the access token for the Dhan client
 	dhanClient.SetAccessToken(accessToken)
 
@@ -58,6 +60,8 @@ You can check the [examples](https://github.com/tradewithcanvas/godhanhq/tree/ma
 #### Some examples:
 
 [Consent Login](https://github.com/tradewithcanvas/godhanhq/tree/main/examples/consent)
+
+[Market](https://github.com/tradewithcanvas/godhanhq/tree/main/examples/market)
 
 [Margins](https://github.com/tradewithcanvas/godhanhq/tree/main/examples/margins)
 
