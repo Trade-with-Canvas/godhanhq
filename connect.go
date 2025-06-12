@@ -89,6 +89,20 @@ const (
 	// Profile endpoints
 
 	URIProfile = "/profile"
+
+	// Orders endpoints
+
+	URIGetOrders          = "/orders"
+	URIPlaceOrder         = "/orders"
+	URIModifyPendingOrder = "/orders/%s"
+	URICancelPendingOrder = "/orders/%s"
+	URISliceOrder         = "/orders/slicing"
+	URIGetOrderStatus     = "/orders/%s"
+
+	// Trades endpoints
+
+	URIGetTrades        = "/trades"
+	URIGetTradesByOrder = "/trades/%s"
 )
 
 type ErrorResponse struct {
