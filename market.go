@@ -69,6 +69,26 @@ type MarketDepthQuote struct {
 	OHLC              OHLC        `json:"ohlc"`
 }
 
+type ChartingDataParams struct {
+	SecurityId      string `json:"securityId"`
+	ExchangeSegment string `json:"exchangeSegment"`
+	Instrument      string `json:"instrument"`
+	ExpiryCode      int    `json:"expiryCode"`
+	Oi              bool   `json:"oi"`
+	FromDate        string `json:"fromDate"`
+	ToDate          string `json:"toDate"`
+}
+
+type ChartingData struct {
+	Open         []float64 `json:"open"`
+	High         []float64 `json:"high"`
+	Low          []float64 `json:"low"`
+	Close        []float64 `json:"close"`
+	Volume       []int32   `json:"volume"`
+	TimeStamp    []string  `json:"timestamp"`
+	OpenInterest []int32   `json:"open_interest"`
+}
+
 func (c *Client) GetLTP(input MarketDataInput) (LTPResponse, error) {
 	headers := http.Header{
 		"Content-Type": {"application/json"},
@@ -133,4 +153,46 @@ func (c *Client) GetMarketDepth(input MarketDataInput) (MarketDepthResponse, err
 	}
 
 	return marketDepthResponse, nil
+}
+
+func (c *Client) GetHistoricalData(input ChartingDataParams) (ChartingData, error) {
+	headers := http.Header{
+		"Content-Type": {"application/json"},
+		"Accept":       {"application/json"},
+		"access-token": {c.accessToken},
+	}
+	resp, err := c.httpClient.DoJSON(http.MethodPost, c.baseURI+URIChartsHistorical, nil, input, headers, &ChartingData{})
+	if err != nil {
+		return ChartingData{}, err
+	}
+	if resp.Response.StatusCode != http.StatusOK {
+		return ChartingData{}, nil
+	}
+	var historicalDataResponse ChartingData
+	if err := json.Unmarshal(resp.Body, &historicalDataResponse); err != nil {
+		return ChartingData{}, err
+	}
+
+	return historicalDataResponse, nil
+}
+
+func (c *Client) GetIntradayData(input ChartingDataParams) (ChartingData, error) {
+	headers := http.Header{
+		"Content-Type": {"application/json"},
+		"Accept":       {"application/json"},
+		"access-token": {c.accessToken},
+	}
+	resp, err := c.httpClient.DoJSON(http.MethodPost, c.baseURI+URIChartsIntraday, nil, input, headers, &ChartingData{})
+	if err != nil {
+		return ChartingData{}, err
+	}
+	if resp.Response.StatusCode != http.StatusOK {
+		return ChartingData{}, nil
+	}
+	var intradayDataResponse ChartingData
+	if err := json.Unmarshal(resp.Body, &intradayDataResponse); err != nil {
+		return intradayDataResponse, err
+	}
+
+	return intradayDataResponse, nil
 }

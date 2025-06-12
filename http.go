@@ -62,6 +62,7 @@ func (c *httpClient) Do(method, rURL string, headers http.Header, params url.Val
 		if headers.Get("Content-Type") == "" {
 			headers.Set("Content-Type", "application/x-www-form-urlencoded")
 		}
+
 	} else {
 		// For GET or other methods, params are treated as query parameters
 		if len(params) > 0 {
@@ -107,6 +108,10 @@ func (c *httpClient) DoRaw(method, rURL string, reqBody []byte, headers http.Hea
 		}
 		req.Header = headers
 	}
+
+	// Set the User-Agent header at last
+	req.Header.Set("User-Agent", "DhanHQ Go SDK")
+
 	// Log the request body if debug is enabled
 	if c.debug {
 		log.Println("Request Body:", string(reqBody))
